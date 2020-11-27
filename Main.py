@@ -26,6 +26,7 @@ IN = 'input/'
 OU = 'output/'
 
 IN_EXCEL = '5&8_input_201127.xlsx'
+SHEET_NAME = '5_input'
 ORI_SEQ_STRCTR = [4, 25, 27, -3]
 TOTAL_CPU = mp.cpu_count()
 MULTI_CNT = int(TOTAL_CPU*0.8)
@@ -71,7 +72,7 @@ def main_20201127():
     logic_prep = LogicPrep.LogicPreps()
     logic = Logic.Logics()
 
-    df = util.read_excel_to_df(WORK_DIR + IN + IN_EXCEL, '5_input')
+    df = util.read_excel_to_df(WORK_DIR + IN + IN_EXCEL, SHEET_NAME)
     len_df = len(df[df.columns[0]])
 
     result_list = []
@@ -103,12 +104,14 @@ def main_20201127():
         af_mm_seq_list = list(mm_seq_set)
         for tmp_seq in af_mm_seq_list[: n_of_sub_seq]:
             if cnt == 0:
-                result_list.append([ori_seq, bp_f + tmp_seq[:len(bf_spacer_n_fr_ngg)] + gg_fr_ngg + tmp_seq[len(bf_spacer_n_fr_ngg):] + bp_b, n_of_mismatch])
+                result_list.append([ori_seq, bp_f + tmp_seq[:len(bf_spacer_n_fr_ngg)] + gg_fr_ngg + tmp_seq[len(
+                    bf_spacer_n_fr_ngg):] + bp_b, n_of_mismatch])
             else:
-                result_list.append(['', bp_f + tmp_seq[:len(bf_spacer_n_fr_ngg)] + gg_fr_ngg + tmp_seq[len(bf_spacer_n_fr_ngg):] + bp_b, n_of_mismatch])
+                result_list.append(['', bp_f + tmp_seq[:len(bf_spacer_n_fr_ngg)] + gg_fr_ngg + tmp_seq[len(
+                    bf_spacer_n_fr_ngg):] + bp_b, n_of_mismatch])
             cnt += 1
 
-    util.make_excel(WORK_DIR + OU + '5_input_result', ['ori_seq', 'sub_seq', '#_of_mismatch'], result_list)
+    util.make_excel(WORK_DIR + OU + SHEET_NAME + '_result', ['ori_seq', 'sub_seq', '#_of_mismatch'], result_list)
 
 
 if __name__ == '__main__':
